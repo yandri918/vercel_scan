@@ -13,7 +13,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.String(20), default='user')  # user, admin, agronomist
+    role = db.Column(db.String(20), default='user')  # user, admin, superadmin
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -23,10 +23,6 @@ class User(db.Model):
     phone = db.Column(db.String(20))
     location = db.Column(db.String(100))
     farm_size = db.Column(db.Float)  # in hectares
-    
-    # Relationships
-    recommendations = db.relationship('Recommendation', backref='user', lazy='dynamic', cascade='all, delete-orphan')
-    npk_readings = db.relationship('NpkReading', backref='user', lazy='dynamic', cascade='all, delete-orphan')
     
     def set_password(self, password):
         """Hash and set the user password."""
