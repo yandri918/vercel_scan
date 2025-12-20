@@ -1,70 +1,39 @@
-"""Minimal Flask API for Vercel - Auth + Product Passport."""
+"""Super minimal Flask app for Product Passport - No database."""
 import os
-from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
-from flask_cors import CORS
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-
-# Initialize extensions
-db = SQLAlchemy()
-jwt = JWTManager()
-limiter = Limiter(
-    key_func=get_remote_address,
-    default_limits=["100 per hour"]
-)
-
+from flask import Flask, render_template, request, jsonify
 
 def create_app():
-    """Create Flask app for Vercel."""
-    # Set template folder
+    """Create minimal Flask app for product passport only."""
     template_dir = os.path.join(os.path.dirname(__file__), 'templates')
     app = Flask(__name__, template_folder=template_dir)
     
-    # Configuration
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'vercel-secret-key')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', '')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'jwt-secret-key')
-    
-    # Initialize extensions
-    db.init_app(app)
-    jwt.init_app(app)
-    limiter.init_app(app)
-    CORS(app)
-    
-    # Register blueprints
-    from app.routes.auth import auth_bp
-    from app.routes.product import product_bp
-    app.register_blueprint(auth_bp, url_prefix='/api/auth')
-    app.register_blueprint(product_bp)
-    
-    # Root route
     @app.route('/')
     def index():
         return jsonify({
             'success': True,
-            'message': 'AgriSensa API is running',
-            'endpoints': {
-                'login': '/api/auth/simple-login',
-                'register': '/api/auth/simple-register',
-                'activities': '/api/auth/activities',
-                'product': '/product/<batch_id>'
-            }
+            'message': 'AgriSensa Product Passport API',
+            'usage': '/product/BATCH001?name=Produk&farmer=Petani&location=Lokasi'
         })
     
-    # Health check
+    @app.route('/product/<batch_id>')
+    def product_passport(batch_id):
+        """Display product passport page."""
+        product = {
+            'batch_id': batch_id,
+            'name': request.args.get('name', 'Produk AgriSensa'),
+            'variety': request.args.get('variety', ''),
+            'farmer': request.args.get('farmer', 'Petani Indonesia'),
+            'location': request.args.get('location', 'Indonesia'),
+            'harvest_date': request.args.get('harvest_date', ''),
+            'weight': request.args.get('weight', ''),
+            'price': request.args.get('price', type=float),
+            'emoji': request.args.get('emoji', '🌾'),
+            'certifications': request.args.getlist('cert') or ['Organik', 'Fresh', 'Lokal']
+        }
+        return render_template('product_passport.html', product=product)
+    
     @app.route('/api/health')
     def health():
         return jsonify({'status': 'ok'})
-    
-    # Initialize database
-    with app.app_context():
-        try:
-            db.create_all()
-            app.logger.info("Database initialized")
-        except Exception as e:
-            app.logger.warning(f"Database init failed: {e}")
     
     return app
