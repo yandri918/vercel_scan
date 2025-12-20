@@ -28,7 +28,14 @@ def create_app():
             'weight': request.args.get('weight', ''),
             'price': request.args.get('price', type=float),
             'emoji': request.args.get('emoji', '🌾'),
-            'certifications': request.args.getlist('cert') or ['Organik', 'Fresh', 'Lokal']
+            'certifications': request.args.getlist('cert') or ['Organik', 'Fresh', 'Lokal'],
+            # Lab Results
+            'cn_ratio': request.args.get('cn_ratio', ''),
+            'ph_level': request.args.get('ph_level', ''),
+            'nitrogen': request.args.get('nitrogen', ''),
+            'phosphate': request.args.get('phosphate', ''),
+            'kalium': request.args.get('kalium', ''),
+            'grade': request.args.get('grade', '')
         }
         return render_template('product_passport.html', product=product)
     
