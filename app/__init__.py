@@ -1,4 +1,4 @@
-"""Minimal Flask API for Vercel - Auth only."""
+"""Minimal Flask API for Vercel - Auth + Product Passport."""
 import os
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -17,8 +17,10 @@ limiter = Limiter(
 
 
 def create_app():
-    """Create minimal Flask app for Vercel."""
-    app = Flask(__name__)
+    """Create Flask app for Vercel."""
+    # Set template folder
+    template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+    app = Flask(__name__, template_folder=template_dir)
     
     # Configuration
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'vercel-secret-key')
@@ -32,21 +34,23 @@ def create_app():
     limiter.init_app(app)
     CORS(app)
     
-    # Register only auth blueprint
+    # Register blueprints
     from app.routes.auth import auth_bp
+    from app.routes.product import product_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(product_bp)
     
     # Root route
     @app.route('/')
     def index():
         return jsonify({
             'success': True,
-            'message': 'AgriSensa Auth API is running',
+            'message': 'AgriSensa API is running',
             'endpoints': {
                 'login': '/api/auth/simple-login',
                 'register': '/api/auth/simple-register',
                 'activities': '/api/auth/activities',
-                'users': '/api/auth/users-list'
+                'product': '/product/<batch_id>'
             }
         })
     
