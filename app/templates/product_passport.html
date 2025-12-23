@@ -247,6 +247,58 @@
                 </div>
             </div>
 
+            <!-- CLIMATE PROOF SECTION -->
+            {% if product.avg_temp %}
+            <div class="divider"></div>
+            <div
+                style='background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-radius: 15px; padding: 20px; margin: 0 20px 20px 20px; border: 1px solid #fcd34d;'>
+                <h3 style='margin: 0 0 15px 0; color: #92400e; font-size: 1.1em;'>🌍 Climate Proof (Bukti Iklim)</h3>
+                <div style='display:flex; justify-content:space-between; text-align: center;'>
+                    <div style='background: rgba(255,255,255,0.5); padding: 8px; border-radius: 10px; width: 30%;'>
+                        <div style='font-size: 1.5em;'>🌡️</div>
+                        <div style='font-weight: bold; color: #92400e;'>{{ product.avg_temp }}°C</div>
+                        <div style='font-size: 0.7em; color: #b45309;'>Avg Temp</div>
+                    </div>
+                    {% if product.avg_hum %}
+                    <div style='background: rgba(255,255,255,0.5); padding: 8px; border-radius: 10px; width: 30%;'>
+                        <div style='font-size: 1.5em;'>💧</div>
+                        <div style='font-weight: bold; color: #92400e;'>{{ product.avg_hum }}%</div>
+                        <div style='font-size: 0.7em; color: #b45309;'>Humidity</div>
+                    </div>
+                    {% endif %}
+                    {% if product.sun_hours %}
+                    <div style='background: rgba(255,255,255,0.5); padding: 8px; border-radius: 10px; width: 30%;'>
+                        <div style='font-size: 1.5em;'>☀️</div>
+                        <div style='font-weight: bold; color: #92400e;'>{{ product.sun_hours }}h</div>
+                        <div style='font-size: 0.7em; color: #b45309;'>Sun/Day</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- JOURNEY TIMELINE SECTION -->
+            {% if product.milestones and product.milestones|length > 0 %}
+            <div class="divider"></div>
+            <div style='background: white; border-radius: 15px; padding: 0 20px 20px 20px;'>
+                <h3 style='margin: 0 0 20px 0; color: #0f766e;'>🚚 Perjalanan Produk</h3>
+                <div style='position: relative; padding-left: 20px; border-left: 2px solid #e2e8f0; margin-left: 10px;'>
+                    {% for m in product.milestones %}
+                    <div style='margin-bottom: 25px; position: relative;'>
+                        <div
+                            style='position: absolute; left: -27px; top: 0; background: #10b981; color: white; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 2px #10b981;'>
+                        </div>
+                        <div style='font-weight: bold; color: #334155; font-size: 0.95em;'>{{ m.event }} {{ m.icon }}
+                        </div>
+                        <div style='font-size: 0.8em; color: #6b7280; margin-top: 2px;'>{{ m.date }} • {{ m.time }}
+                        </div>
+                        <div style='font-size: 0.8em; color: #6b7280;'>📍 {{ m.loc }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
             {% if product.cn_ratio or product.nitrogen %}
             <div class="divider"></div>
 
