@@ -32,8 +32,21 @@ def product_passport(batch_id):
         'weight': request.args.get('weight', ''),
         'price': request.args.get('price', type=float),
         'emoji': request.args.get('emoji', '🌾'),
-        'certifications': request.args.getlist('cert') or ['Organik', 'Fresh', 'Lokal']
+        'certifications': request.args.getlist('cert') or ['Organik', 'Fresh', 'Lokal'],
+        # Advanced Traceability 2.0
+        'avg_temp': request.args.get('avg_temp'),
+        'avg_hum': request.args.get('avg_hum'),
+        'sun_hours': request.args.get('sun_hours'),
+        'milestones': []
     }
+
+    # Parse Milestones JSON if present
+    milestones_json = request.args.get('milestones')
+    if milestones_json:
+        try:
+            product['milestones'] = json.loads(milestones_json)
+        except Exception:
+            pass # Keep empty list if parse fails
     
     # If batch_id looks like encoded data, try to decode it
     if len(batch_id) > 20 and not batch_id.startswith('BATCH'):
