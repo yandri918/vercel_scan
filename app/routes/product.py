@@ -9,9 +9,17 @@ product_bp = Blueprint('product', __name__)
 def decode_product_data(encoded_data):
     """Decode base64 encoded product data."""
     try:
-        decoded = base64.urlsafe_b64decode(encoded_data + '==').decode('utf-8')
+        # Ensure correct padding for base64
+        # Strip existing padding then add correct amount logic or just safe append
+        encoded_data = encoded_data.rstrip('=')
+        padding = 4 - (len(encoded_data) % 4)
+        if padding != 4:
+            encoded_data += '=' * padding
+            
+        decoded = base64.urlsafe_b64decode(encoded_data).decode('utf-8')
         return json.loads(decoded)
-    except Exception:
+    except Exception as e:
+        # Return None on any error so defaults are used (or could log e)
         return None
 
 
