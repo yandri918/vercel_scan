@@ -63,6 +63,7 @@ def product_passport(batch_id):
             # Check if using Minified Keys (Traceability 2.1)
             # Map 'n' -> 'name', etc.
             if 'n' in decoded:
+                climate_data = decoded.get('c', {})
                 product.update({
                     'batch_id': decoded.get('id'),
                     'name': decoded.get('n'),
@@ -72,11 +73,11 @@ def product_passport(batch_id):
                     'harvest_date': decoded.get('d'),
                     'weight': decoded.get('w'),
                     'emoji': decoded.get('e'),
-                    'price': float(decoded['p']) if decoded.get('p') else None,
-                    # Climate map
-                    'avg_temp': decoded.get('c', {}).get('t'),
-                    'avg_hum': decoded.get('c', {}).get('h'),
-                    'sun_hours': decoded.get('c', {}).get('s'),
+                    'price': float(decoded['p']) if decoded.get('p') and decoded['p'] != 'None' else None,
+                    # Climate map - extract from nested dict
+                    'avg_temp': climate_data.get('t') if climate_data.get('t') else None,
+                    'avg_hum': climate_data.get('h') if climate_data.get('h') else None,
+                    'sun_hours': climate_data.get('s') if climate_data.get('s') else None,
                     'milestones': decoded.get('m', [])
                 })
             else:
