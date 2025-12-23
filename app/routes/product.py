@@ -60,7 +60,28 @@ def product_passport(batch_id):
     if len(batch_id) > 20 and not batch_id.startswith('BATCH'):
         decoded = decode_product_data(batch_id)
         if decoded:
-            product.update(decoded)
+            # Check if using Minified Keys (Traceability 2.1)
+            # Map 'n' -> 'name', etc.
+            if 'n' in decoded:
+                product.update({
+                    'batch_id': decoded.get('id'),
+                    'name': decoded.get('n'),
+                    'variety': decoded.get('v'),
+                    'farmer': decoded.get('f'),
+                    'location': decoded.get('l'),
+                    'harvest_date': decoded.get('d'),
+                    'weight': decoded.get('w'),
+                    'emoji': decoded.get('e'),
+                    'price': float(decoded['p']) if decoded.get('p') else None,
+                    # Climate map
+                    'avg_temp': decoded.get('c', {}).get('t'),
+                    'avg_hum': decoded.get('c', {}).get('h'),
+                    'sun_hours': decoded.get('c', {}).get('s'),
+                    'milestones': decoded.get('m', [])
+                })
+            else:
+                # Legacy full keys
+                product.update(decoded)
     
     return render_template('product_passport.html', product=product)
 
