@@ -33,30 +33,42 @@ def decode_product_data(encoded_data):
 def product_passport(batch_id):
     """Display product passport page using query parameters."""
     
+    # Manual query string parsing (Vercel workaround)
+    from urllib.parse import parse_qs, unquote
+    
+    query_string = request.query_string.decode('utf-8')
+    params = parse_qs(query_string)
+    
+    # Helper to get first value from parsed params
+    def get_param(key, default=''):
+        values = params.get(key, [default])
+        return values[0] if values else default
+    
     # Debug log
     print(f"DEBUG - batch_id: {batch_id}")
-    print(f"DEBUG - query params: {dict(request.args)}")
+    print(f"DEBUG - query_string: {query_string}")
+    print(f"DEBUG - parsed params: {params}")
     
-    # Extract data from query parameters
+    # Extract data from manually parsed query parameters
     product = {
-        'batch_id': request.args.get('batch_id', batch_id),
-        'name': request.args.get('name', 'Produk AgriSensa'),
-        'variety': request.args.get('variety', ''),
-        'farmer': request.args.get('farmer', 'Petani Indonesia'),
-        'location': request.args.get('location', 'Indonesia'),
-        'harvest_date': request.args.get('harvest_date', ''),
-        'weight': request.args.get('weight', '1 kg'),
+        'batch_id': get_param('batch_id', batch_id),
+        'name': get_param('name', 'Produk AgriSensa'),
+        'variety': get_param('variety', ''),
+        'farmer': get_param('farmer', 'Petani Indonesia'),
+        'location': get_param('location', 'Indonesia'),
+        'harvest_date': get_param('harvest_date', ''),
+        'weight': get_param('weight', '1 kg'),
         'emoji': '🌾',
         'price': None,
         'certifications': ['Organik', 'Fresh', 'Lokal'],
-        'avg_temp': request.args.get('avg_temp', ''),
-        'avg_hum': request.args.get('avg_hum', ''),
-        'sun_hours': request.args.get('sun_hours', ''),
+        'avg_temp': get_param('avg_temp', ''),
+        'avg_hum': get_param('avg_hum', ''),
+        'sun_hours': get_param('sun_hours', ''),
         'milestones': []
     }
     
     # Parse price if present
-    price_str = request.args.get('price')
+    price_str = get_param('price')
     if price_str and price_str not in ['None', '']:
         try:
             product['price'] = float(price_str)
@@ -64,15 +76,17 @@ def product_passport(batch_id):
             pass
     
     # Parse milestones JSON if present
-    milestones_json = request.args.get('milestones')
+    milestones_json = get_param('milestones')
     if milestones_json:
         try:
-            product['milestones'] = json.loads(milestones_json)
+            product['milestones'] = json.loads(unquote(milestones_json))
         except Exception as e:
             print(f"DEBUG - Milestones parse error: {e}")
+            print(f"DEBUG - Milestones raw: {milestones_json}")
             pass
     
-    print(f"DEBUG - Final product dict: {product}")
+    print(f"DEBUG - Final product dict keys: {product.keys()}")
+    print(f"DEBUG - avg_temp value: '{product['avg_temp']}'")
     
     return render_template('product_passport.html', product=product)
 
