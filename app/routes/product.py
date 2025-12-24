@@ -10,16 +10,22 @@ def decode_product_data(encoded_data):
     """Decode base64 encoded product data."""
     try:
         # Ensure correct padding for base64
-        # Strip existing padding then add correct amount logic or just safe append
         encoded_data = encoded_data.rstrip('=')
         padding = 4 - (len(encoded_data) % 4)
         if padding != 4:
             encoded_data += '=' * padding
             
-        decoded = base64.urlsafe_b64decode(encoded_data).decode('utf-8')
-        return json.loads(decoded)
+        decoded_bytes = base64.urlsafe_b64decode(encoded_data)
+        decoded_str = decoded_bytes.decode('utf-8')
+        data = json.loads(decoded_str)
+        
+        # Log success for debugging
+        print(f"[DECODE SUCCESS] Keys: {list(data.keys())}")
+        return data
     except Exception as e:
-        # Return None on any error so defaults are used (or could log e)
+        # Log error for debugging
+        print(f"[DECODE ERROR] {type(e).__name__}: {str(e)}")
+        print(f"[DECODE ERROR] Input length: {len(encoded_data)}")
         return None
 
 
