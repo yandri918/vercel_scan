@@ -31,65 +31,62 @@ def decode_product_data(encoded_data):
 
 @product_bp.route('/product/<batch_id>')
 def product_passport(batch_id):
-    """
-    Display product passport page.
-    Data can be passed via query params or encoded in batch_id.
-    """
-    # Try to get data from query params first
+    """Display product passport page."""
+    # Start with defaults
     product = {
         'batch_id': batch_id,
-        'name': request.args.get('name', 'Produk AgriSensa'),
-        'variety': request.args.get('variety', ''),
-        'farmer': request.args.get('farmer', 'Petani Indonesia'),
-        'location': request.args.get('location', 'Indonesia'),
-        'harvest_date': request.args.get('harvest_date', ''),
-        'weight': request.args.get('weight', ''),
-        'price': request.args.get('price', type=float),
-        'emoji': request.args.get('emoji', '🌾'),
-        'certifications': request.args.getlist('cert') or ['Organik', 'Fresh', 'Lokal'],
-        # Advanced Traceability 2.0
-        'avg_temp': request.args.get('avg_temp'),
-        'avg_hum': request.args.get('avg_hum'),
-        'sun_hours': request.args.get('sun_hours'),
+        'name': 'Produk AgriSensa',
+        'variety': '',
+        'farmer': 'Petani Indonesia',
+        'location': 'Indonesia',
+        'harvest_date': '',
+        'weight': '1 kg',
+        'emoji': '🌾',
+        'price': None,
+        'certifications': ['Organik', 'Fresh', 'Lokal'],
+        'avg_temp': '',
+        'avg_hum': '',
+        'sun_hours': '',
         'milestones': []
     }
-
-    # Parse Milestones JSON if present
-    milestones_json = request.args.get('milestones')
-    if milestones_json:
-        try:
-            product['milestones'] = json.loads(milestones_json)
-        except Exception:
-            pass # Keep empty list if parse fails
     
-    # If batch_id looks like encoded data, try to decode it
+    # Try to decode if batch_id looks like Base64
     if len(batch_id) > 20 and not batch_id.startswith('BATCH'):
-        decoded = decode_product_data(batch_id)
-        if decoded and 'n' in decoded:
-            # Minified Keys (Traceability 2.1) - REBUILD product dict entirely
-            climate_data = decoded.get('c', {})
-            milestones_data = decoded.get('m', [])
+        try:
+            # Simple decode without helper function
+            encoded = batch_id.rstrip('=')
+            padding = 4 - (len(encoded) % 4)
+            if padding != 4:
+                encoded += '=' * padding
             
-            # Override ALL default values with decoded data
-            product = {
-                'batch_id': decoded.get('id', batch_id),
-                'name': decoded.get('n', 'Produk AgriSensa'),
-                'variety': decoded.get('v', ''),
-                'farmer': decoded.get('f', 'Petani Indonesia'),
-                'location': decoded.get('l', 'Indonesia'),
-                'harvest_date': decoded.get('d', ''),
-                'weight': decoded.get('w', '1 kg'),
-                'emoji': decoded.get('e', '🌾'),
-                'price': float(decoded['p']) if decoded.get('p') and decoded['p'] not in ['None', ''] else None,
-                'certifications': ['Organik', 'Fresh', 'Lokal'],
-                'avg_temp': climate_data.get('t', ''),
-                'avg_hum': climate_data.get('h', ''),
-                'sun_hours': climate_data.get('s', ''),
-                'milestones': milestones_data
-            }
-        elif decoded:
-            # Legacy full keys
-            product.update(decoded)
+            decoded_bytes = base64.urlsafe_b64decode(encoded)
+            decoded_str = decoded_bytes.decode('utf-8')
+            data = json.loads(decoded_str)
+            
+            # Check if minified keys exist
+            if 'n' in data:
+                climate = data.get('c', {})
+                # Override defaults with decoded data
+                product['batch_id'] = data.get('id', batch_id)
+                product['name'] = data.get('n', product['name'])
+                product['variety'] = data.get('v', '')
+                product['farmer'] = data.get('f', product['farmer'])
+                product['location'] = data.get('l', product['location'])
+                product['harvest_date'] = data.get('d', '')
+                product['weight'] = data.get('w', '1 kg')
+                product['emoji'] = data.get('e', '🌾')
+                product['avg_temp'] = climate.get('t', '')
+                product['avg_hum'] = climate.get('h', '')
+                product['sun_hours'] = climate.get('s', '')
+                product['milestones'] = data.get('m', [])
+                
+                # Handle price
+                if data.get('p') and data['p'] not in ['None', '']:
+                    product['price'] = float(data['p'])
+        except Exception as e:
+            # Silently fail and use defaults
+            print(f"Decode error: {e}")
+            pass
     
     return render_template('product_passport.html', product=product)
 

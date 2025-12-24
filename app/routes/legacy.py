@@ -585,7 +585,7 @@ def analyze_disease_advanced_endpoint():
 
         client = InferenceHTTPClient(
             api_url="https://serverless.roboflow.com",
-            api_key=os.environ.get('ROBOFLOW_API_KEY', 'jPdPobkMUhG9yEKohrrP')
+            api_key=os.environ.get('ROBOFLOW_API_KEY', 'your_roboflow_key_here')
         )
 
         current_app.logger.info("Menjalankan workflow Roboflow...")

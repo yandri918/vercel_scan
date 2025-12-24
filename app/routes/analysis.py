@@ -192,7 +192,7 @@ def analyze_disease_advanced():
         
         try:
             # Initialize Roboflow client
-            roboflow_api_key = os.environ.get('ROBOFLOW_API_KEY', 'jPdPobkMUhG9yEKohrrP')
+            roboflow_api_key = os.environ.get('ROBOFLOW_API_KEY', 'your_roboflow_key_here')
             client = InferenceHTTPClient(
                 api_url="https://serverless.roboflow.com",
                 api_key=roboflow_api_key
