@@ -59,38 +59,31 @@ def product_passport(batch_id):
     # If batch_id looks like encoded data, try to decode it
     if len(batch_id) > 20 and not batch_id.startswith('BATCH'):
         decoded = decode_product_data(batch_id)
-        if decoded:
-            # Check if using Minified Keys (Traceability 2.1)
-            if 'n' in decoded:
-                climate_data = decoded.get('c', {})
-                milestones_data = decoded.get('m', [])
-                
-                # Debug: log what we got
-                print(f"DEBUG - Decoded data keys: {decoded.keys()}")
-                print(f"DEBUG - Climate data: {climate_data}")
-                print(f"DEBUG - Milestones count: {len(milestones_data)}")
-                
-                product = {
-                    'batch_id': decoded.get('id', batch_id),
-                    'name': decoded.get('n', 'Produk AgriSensa'),
-                    'variety': decoded.get('v', ''),
-                    'farmer': decoded.get('f', 'Petani Indonesia'),
-                    'location': decoded.get('l', 'Indonesia'),
-                    'harvest_date': decoded.get('d', ''),
-                    'weight': decoded.get('w', '1 kg'),
-                    'emoji': decoded.get('e', '🌾'),
-                    'price': float(decoded['p']) if decoded.get('p') and decoded['p'] not in ['None', ''] else None,
-                    'certifications': ['Organik', 'Fresh', 'Lokal'],
-                    # Climate data
-                    'avg_temp': climate_data.get('t', ''),
-                    'avg_hum': climate_data.get('h', ''),
-                    'sun_hours': climate_data.get('s', ''),
-                    # Milestones
-                    'milestones': milestones_data
-                }
-            else:
-                # Legacy full keys
-                product.update(decoded)
+        if decoded and 'n' in decoded:
+            # Minified Keys (Traceability 2.1) - REBUILD product dict entirely
+            climate_data = decoded.get('c', {})
+            milestones_data = decoded.get('m', [])
+            
+            # Override ALL default values with decoded data
+            product = {
+                'batch_id': decoded.get('id', batch_id),
+                'name': decoded.get('n', 'Produk AgriSensa'),
+                'variety': decoded.get('v', ''),
+                'farmer': decoded.get('f', 'Petani Indonesia'),
+                'location': decoded.get('l', 'Indonesia'),
+                'harvest_date': decoded.get('d', ''),
+                'weight': decoded.get('w', '1 kg'),
+                'emoji': decoded.get('e', '🌾'),
+                'price': float(decoded['p']) if decoded.get('p') and decoded['p'] not in ['None', ''] else None,
+                'certifications': ['Organik', 'Fresh', 'Lokal'],
+                'avg_temp': climate_data.get('t', ''),
+                'avg_hum': climate_data.get('h', ''),
+                'sun_hours': climate_data.get('s', ''),
+                'milestones': milestones_data
+            }
+        elif decoded:
+            # Legacy full keys
+            product.update(decoded)
     
     return render_template('product_passport.html', product=product)
 
