@@ -32,6 +32,11 @@ def decode_product_data(encoded_data):
 @product_bp.route('/product/<batch_id>')
 def product_passport(batch_id):
     """Display product passport page using query parameters."""
+    
+    # Debug log
+    print(f"DEBUG - batch_id: {batch_id}")
+    print(f"DEBUG - query params: {dict(request.args)}")
+    
     # Extract data from query parameters
     product = {
         'batch_id': request.args.get('batch_id', batch_id),
@@ -63,8 +68,11 @@ def product_passport(batch_id):
     if milestones_json:
         try:
             product['milestones'] = json.loads(milestones_json)
-        except:
+        except Exception as e:
+            print(f"DEBUG - Milestones parse error: {e}")
             pass
+    
+    print(f"DEBUG - Final product dict: {product}")
     
     return render_template('product_passport.html', product=product)
 
