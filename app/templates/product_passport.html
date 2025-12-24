@@ -247,6 +247,16 @@
                 </div>
             </div>
 
+
+            <!-- DEBUG: Show raw values -->
+            <div style="background: #f0f0f0; padding: 10px; margin: 20px; font-size: 0.8em; font-family: monospace;">
+                <strong>DEBUG INFO:</strong><br>
+                avg_temp: "{{ product.avg_temp }}" (type: {{ product.avg_temp.__class__.__name__ }})<br>
+                avg_hum: "{{ product.avg_hum }}"<br>
+                sun_hours: "{{ product.sun_hours }}"<br>
+                milestones count: {{ product.milestones|length }}
+            </div>
+
             <!-- CLIMATE PROOF SECTION -->
             {% if product.avg_temp %}
             <div class="divider"></div>
