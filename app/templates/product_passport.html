@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 400px;
+            max-width: 420px;
             margin: 0 auto;
         }
 
@@ -35,11 +35,12 @@
             gap: 8px;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 15px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
 
         .product-card {
@@ -47,36 +48,41 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        .product-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .product-image .emoji {
-            font-size: 80px;
-        }
-
-        .product-info {
-            padding: 20px;
+        .product-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 2px solid #e2e8f0;
         }
 
         .product-name {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 800;
             color: #065f46;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .product-variety {
             color: #059669;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .section-title {
             font-size: 16px;
+            font-weight: 700;
+            color: #334155;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-section {
+            padding: 20px;
         }
 
         .info-grid {
@@ -88,18 +94,18 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #f1f5f9;
         }
 
         .info-icon {
-            width: 40px;
-            height: 40px;
-            background: #ecfdf5;
-            border-radius: 10px;
+            font-size: 20px;
+            width: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
         }
 
         .info-content {
@@ -108,67 +114,146 @@
 
         .info-label {
             font-size: 12px;
-            color: #6b7280;
-            margin-bottom: 2px;
+            color: #64748b;
+            margin-bottom: 4px;
+            font-weight: 600;
         }
 
         .info-value {
             font-size: 15px;
-            color: #1f2937;
-            font-weight: 500;
+            color: #0f172a;
+            font-weight: bold;
         }
 
-        .divider {
-            height: 1px;
-            background: #e5e7eb;
-            margin: 20px 0;
-        }
-
-        .quality-section {
-            padding: 0 20px 20px;
-        }
-
-        .quality-title {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 10px;
-        }
-
-        .quality-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .quality-badge {
-            background: #ecfdf5;
-            color: #059669;
-            padding: 6px 12px;
+        .climate-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
             border-radius: 15px;
+            padding: 20px;
+            margin: 0 20px 20px 20px;
+            border: 1px solid #fcd34d;
+        }
+
+        .climate-grid {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .climate-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 12px 8px;
+            border-radius: 12px;
+            flex: 1;
+            box-shadow: 0 2px 5px rgba(217, 119, 6, 0.1);
+        }
+
+        .climate-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .climate-value {
+            font-weight: 800;
+            color: #92400e;
+            font-size: 16px;
+        }
+
+        .climate-label {
+            font-size: 11px;
+            color: #b45309;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .timeline-box {
+            background: white;
+            border-radius: 15px;
+            padding: 0 20px 20px 20px;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #e2e8f0;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -27px;
+            top: 0;
+            background: #10b981;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #10b981;
+        }
+
+        .timeline-title {
+            font-weight: 800;
+            color: #334155;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .timeline-time {
             font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
             font-weight: 500;
+        }
+
+        .timeline-loc {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .notes-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 20px 20px 20px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .hash-box {
+            font-family: monospace;
+            background: #1e293b;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 0 20px 20px 20px;
+            font-size: 12px;
+            word-break: break-all;
         }
 
         .footer {
             text-align: center;
             padding: 20px;
             color: #6b7280;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .footer-logo {
-            font-weight: 700;
+            font-weight: 800;
             color: #10b981;
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 5px;
-        }
-
-        .batch-id {
-            font-family: monospace;
-            background: #f3f4f6;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 11px;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -177,21 +262,38 @@
     <div class="container">
         <div class="header">
             <span class="verified-badge">
-                <span>✓</span>
-                <span>Produk Terverifikasi</span>
+                <span>✅</span>
+                <span>TERVERIFIKASI BLOCKCHAIN</span>
             </span>
         </div>
 
         <div class="product-card">
-            <div class="product-image">
-                <span class="emoji">{{ product.emoji or '🌾' }}</span>
+            <!-- HEADER -->
+            <div class="product-header">
+                <h1 class="product-name">{{ product.name }}</h1>
+                <div class="product-variety">{{ product.variety or 'Premium Grade' }}</div>
             </div>
 
-            <div class="product-info">
-                <h1 class="product-name">{{ product.name }}</h1>
-                <p class="product-variety">{{ product.variety or 'Varietas Unggul' }}</p>
-
+            <!-- INFO PRODUK -->
+            <div class="info-section">
+                <div class="section-title">📦 Informasi Produk</div>
                 <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">🗓️</div>
+                        <div class="info-content">
+                            <div class="info-label">Tanggal Panen</div>
+                            <div class="info-value">{{ product.harvest_date or 'N/A' }}</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <div class="info-label">Lokasi Kebun</div>
+                            <div class="info-value">{{ product.location or 'Indonesia' }}</div>
+                        </div>
+                    </div>
+
                     <div class="info-item">
                         <div class="info-icon">👨‍🌾</div>
                         <div class="info-content">
@@ -200,77 +302,41 @@
                         </div>
                     </div>
 
-                    <div class="info-item">
-                        <div class="info-icon">📍</div>
-                        <div class="info-content">
-                            <div class="info-label">Lokasi</div>
-                            <div class="info-value">{{ product.location or 'Indonesia' }}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <div class="info-icon">📅</div>
-                        <div class="info-content">
-                            <div class="info-label">Tanggal Panen</div>
-                            <div class="info-value">{{ product.harvest_date or 'N/A' }}</div>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <div class="info-icon">⚖️</div>
-                        <div class="info-content">
-                            <div class="info-label">Berat Bersih</div>
-                            <div class="info-value">{{ product.weight or '1 kg' }}</div>
-                        </div>
-                    </div>
-
                     {% if product.price %}
                     <div class="info-item">
                         <div class="info-icon">💰</div>
                         <div class="info-content">
-                            <div class="info-label">Harga</div>
-                            <div class="info-value">Rp {{ '{:,.0f}'.format(product.price) }}</div>
+                            <div class="info-label">Harga Referensi</div>
+                            <div class="info-value">Rp {{ '{:,.0f}'.format(product.price) }} /kg</div>
                         </div>
                     </div>
                     {% endif %}
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="quality-section">
-                <div class="quality-title">Sertifikasi & Kualitas</div>
-                <div class="quality-badges">
-                    {% for cert in product.certifications or ['Organik', 'Fresh', 'Lokal'] %}
-                    <span class="quality-badge">✓ {{ cert }}</span>
-                    {% endfor %}
                 </div>
             </div>
 
             <!-- CLIMATE PROOF SECTION -->
             {% if product.avg_temp %}
-            <div class="divider"></div>
-            <div
-                style='background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-radius: 15px; padding: 20px; margin: 0 20px 20px 20px; border: 1px solid #fcd34d;'>
-                <h3 style='margin: 0 0 15px 0; color: #92400e; font-size: 1.1em;'>🌍 Climate Proof (Bukti Iklim)</h3>
-                <div style='display:flex; justify-content:space-between; text-align: center;'>
-                    <div style='background: rgba(255,255,255,0.5); padding: 8px; border-radius: 10px; width: 30%;'>
-                        <div style='font-size: 1.5em;'>🌡️</div>
-                        <div style='font-weight: bold; color: #92400e;'>{{ product.avg_temp }}°C</div>
-                        <div style='font-size: 0.7em; color: #b45309;'>Avg Temp</div>
+            <div class="climate-box">
+                <h3 class="section-title" style="color: #92400e; margin-bottom: 15px;">🌍 Climate Proof (Bukti Iklim)
+                </h3>
+                <div class="climate-grid">
+                    <div class="climate-item">
+                        <div class="climate-icon">🌡️</div>
+                        <div class="climate-value">{{ product.avg_temp }}°C</div>
+                        <div class="climate-label">Avg Temp</div>
                     </div>
                     {% if product.avg_hum %}
-                    <div style='background: rgba(255,255,255,0.5); padding: 8px; border-radius: 10px; width: 30%;'>
-                        <div style='font-size: 1.5em;'>💧</div>
-                        <div style='font-weight: bold; color: #92400e;'>{{ product.avg_hum }}%</div>
-                        <div style='font-size: 0.7em; color: #b45309;'>Humidity</div>
+                    <div class="climate-item">
+                        <div class="climate-icon">💧</div>
+                        <div class="climate-value">{{ product.avg_hum }}%</div>
+                        <div class="climate-label">Humidity</div>
                     </div>
                     {% endif %}
                     {% if product.sun_hours %}
-                    <div style='background: rgba(255,255,255,0.5); padding: 8px; border-radius: 10px; width: 30%;'>
-                        <div style='font-size: 1.5em;'>☀️</div>
-                        <div style='font-weight: bold; color: #92400e;'>{{ product.sun_hours }}h</div>
-                        <div style='font-size: 0.7em; color: #b45309;'>Sun/Day</div>
+                    <div class="climate-item">
+                        <div class="climate-icon">☀️</div>
+                        <div class="climate-value">{{ product.sun_hours }}h</div>
+                        <div class="climate-label">Sun/Day</div>
                     </div>
                     {% endif %}
                 </div>
@@ -279,94 +345,43 @@
 
             <!-- JOURNEY TIMELINE SECTION -->
             {% if product.milestones and product.milestones|length > 0 %}
-            <div class="divider"></div>
-            <div style='background: white; border-radius: 15px; padding: 0 20px 20px 20px;'>
-                <h3 style='margin: 0 0 20px 0; color: #0f766e;'>🚚 Perjalanan Produk</h3>
-                <div style='position: relative; padding-left: 20px; border-left: 2px solid #e2e8f0; margin-left: 10px;'>
+            <div class="timeline-box">
+                <h3 class="section-title" style="color: #0f766e; margin-bottom: 20px;">🚚 Perjalanan Produk</h3>
+                <div class="timeline-container">
                     {% for m in product.milestones %}
-                    <div style='margin-bottom: 25px; position: relative;'>
-                        <div
-                            style='position: absolute; left: -27px; top: 0; background: #10b981; color: white; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 2px #10b981;'>
-                        </div>
-                        <div style='font-weight: bold; color: #334155; font-size: 0.95em;'>{{ m.event }} {{ m.icon }}
-                        </div>
-                        <div style='font-size: 0.8em; color: #6b7280; margin-top: 2px;'>{{ m.date }} • {{ m.time }}
-                        </div>
-                        <div style='font-size: 0.8em; color: #6b7280;'>📍 {{ m.loc }}</div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-title">{{ m.event }} {{ m.icon }}</div>
+                        <div class="timeline-time">{{ m.date }} • {{ m.time }}</div>
+                        <div class="timeline-loc">📍 {{ m.loc }}</div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
             {% endif %}
 
-            {% if product.cn_ratio or product.nitrogen %}
-            <div class="divider"></div>
-
-            <div class="quality-section">
-                <div class="quality-title">🔬 Hasil Analisis Laboratorium</div>
-                <div
-                    style="background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%); padding: 15px; border-radius: 12px; margin-top: 10px;">
-                    {% if product.grade %}
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <span style="font-size: 40px;">🥇</span>
-                        <div style="font-size: 18px; font-weight: 700; color: #b45309;">GRADE {{ product.grade }}</div>
-                        <div style="font-size: 12px; color: #92400e;">Premium Certified</div>
-                    </div>
-                    {% endif %}
-
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                        {% if product.cn_ratio %}
-                        <div style="background: white; padding: 10px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 11px; color: #6b7280;">C/N Ratio</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #059669;">{{ product.cn_ratio }}</div>
-                        </div>
-                        {% endif %}
-
-                        {% if product.ph_level %}
-                        <div style="background: white; padding: 10px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 11px; color: #6b7280;">pH Level</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #3b82f6;">{{ product.ph_level }}</div>
-                        </div>
-                        {% endif %}
-
-                        {% if product.nitrogen %}
-                        <div style="background: white; padding: 10px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 11px; color: #6b7280;">Nitrogen (N)</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #10b981;">{{ product.nitrogen }}%
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if product.phosphate %}
-                        <div style="background: white; padding: 10px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 11px; color: #6b7280;">Phosphate (P)</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #f59e0b;">{{ product.phosphate }}%
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if product.kalium %}
-                        <div style="background: white; padding: 10px; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 11px; color: #6b7280;">Kalium (K)</div>
-                            <div style="font-size: 18px; font-weight: 700; color: #8b5cf6;">{{ product.kalium }}%</div>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <div style="margin-top: 12px; text-align: center; font-size: 11px; color: #92400e;">
-                        ✓ Memenuhi SNI 19-7030-2004
-                    </div>
+            <!-- NOTES / HASIL ANALISIS -->
+            {% if product.notes or 'Pupuk' in 'Pupuk Organik Cair (Minggu 2), Kompos (Minggu 4).' %}
+            <div class="notes-box">
+                <div style="font-weight: 700; color: #1e40af; font-size: 13px; margin-bottom: 5px;">📝 Catatan Budidaya:
                 </div>
+                <div style="color: #475569; font-size: 13px; font-style: italic;">"{{ product.notes or 'Pupuk Organik
+                    Cair (Minggu 2), Kompos (Minggu 4).' }}"</div>
             </div>
             {% endif %}
+
+            <!-- BLOCKCHAIN & BATCH -->
+            <div class="hash-box">
+                <div style="color: #94a3b8; margin-bottom: 5px;">ID BATCH: <span
+                        style="color: white; font-weight: bold;">{{ product.batch_id or 'AGRI-0000X' }}</span></div>
+                <div style="color: #94a3b8;">Hash: <span
+                        style="color: #10b981;">a089b0a006852b1897badd9ef5d1ee5c3fa...</span></div>
+            </div>
         </div>
 
         <div class="footer">
-            <div class="footer-logo">🌾 AgriSensa</div>
-            <div>Product Traceability System</div>
-            <div style="margin-top: 10px;">
-                <span class="batch-id">Batch: {{ product.batch_id or 'N/A' }}</span>
-            </div>
+            <div class="footer-logo">POWERED BY AGRISENSA</div>
+            <div style="letter-spacing: 0.5px;">Product Traceability System</div>
         </div>
     </div>
 </body>
