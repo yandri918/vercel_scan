@@ -64,6 +64,7 @@ def product_passport(batch_id):
         'avg_temp': get_param('avg_temp', ''),
         'avg_hum': get_param('avg_hum', ''),
         'sun_hours': get_param('sun_hours', ''),
+        'notes': get_param('notes', ''),
         'milestones': []
     }
     
